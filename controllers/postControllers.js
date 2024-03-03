@@ -8,7 +8,7 @@ const createPost = async (req, res, next) => {
   try {
     const post = new Post({
       title: "sample title",
-      caption: "sample caption",
+      caption: "sample caption3",
       slug: uuidv4(),
       body: {
         type: "doc",
@@ -30,7 +30,7 @@ const updatePost = async (req, res, next) => {
     const post = await Post.findOne({ slug: req.params.slug });
 
     if (!post) {
-      const error = new Error("Post aws not found");
+      const error = new Error("Post was not found");
       next(error);
       return;
     }
@@ -123,6 +123,12 @@ const deletePost = async (req, res, next) => {
               match: {
                 check: true,
               },
+              populate: [
+                {
+                  path: "user",
+                  select: ["avatar", "name"],
+                },
+              ],
             },
           ],
         },
@@ -138,5 +144,20 @@ const deletePost = async (req, res, next) => {
       next(error);
     }
   };
+
+  const getAllPosts = async (req, res, next) => {
+    try {
+      const posts = await Post.find({}).populate([
+       { 
+        path: "user",
+        select: ["avatar", "name", "verified"],
+      }
+    ]);
   
-  export { createPost, updatePost, deletePost, getPost };
+      res.json(posts);
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  export { createPost, updatePost, deletePost, getPost, getAllPosts };
