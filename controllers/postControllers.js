@@ -182,6 +182,10 @@ const deletePost = async (req, res, next) => {
           path: "user",
           select: ['avatar', 'name', 'verified'],
         },
+        {
+          path: "categories",
+          select: ["title"],
+        },
       ])
       .sort({updatedAt: 'desc'});
 
