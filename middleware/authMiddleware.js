@@ -20,7 +20,7 @@ export const authGuard = async(req, res, next) => {
         let error = new Error("Not authorized, No token");
         error.statusCode = 401;
         next(error);
-    }
+    }   
 };
 
 export const adminGuard = (req, res, next) => {
