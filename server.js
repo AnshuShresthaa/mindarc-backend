@@ -13,6 +13,7 @@ import userRoutes from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
 import postCategoriesRoutes from "./routes/postCategoriesRoutes";
+import journalRoutes from "./routes/journalRoutes";
 
 dotenv.config();
 connectDB();
@@ -28,7 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/post-categories", postCategoriesRoutes);
-
+app.use("/api/journal", journalRoutes);
 
 //static assets
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
