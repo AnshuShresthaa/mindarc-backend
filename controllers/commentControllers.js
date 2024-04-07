@@ -3,6 +3,10 @@ import Post from "../models/Post";
 
 const createComment = async (req, res, next) => {
     try{
+
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized: User not logged in" });
+      }
         const {desc, slug, parent, replyOnUser} = req.body;
 
         const post = await Post.findOne({slug: slug});
