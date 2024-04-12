@@ -7,7 +7,9 @@ export const authGuard = async(req, res, next) => {
         req.headers.authorization.startsWith("Bearer")
         ) {
          try{
+
             const token = req.headers.authorization.split(" ")[1]; //spliiting the string to get the token out of Bear
+            console.log(token)
             const { id } = verify(token, process.env.JWT_SECRET);
             req.user = await User.findById(id).select('-password');
             next();

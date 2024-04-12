@@ -50,17 +50,25 @@ const deleteMoodEntry = async (req, res, next) => {
 
 const getMoodEntry = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const moodEntry = await Mood.findById(id);
-    if (!moodEntry) {
-      return res.status(404).json({ message: "Mood entry not found" });
+    
+    const userId = req.params.userId; // Extract userId from the query parameters
+    
+    // Find mood entries based on the user ID
+    const moodEntries = await Mood.find({ userId });
+    
+    // Check if any mood entries were found
+    if (!moodEntries || moodEntries.length === 0) {
+      return res.status(404).json({ message: "No mood entries found for the specified user" });
     }
 
-    res.json(moodEntry);
+    // Return the mood entries as JSON response
+    res.json(moodEntries);
   } catch (error) {
-    next(error);
+    next(error); // Pass any errors to the error-handling middleware
   }
 };
+
+
 
 const getAllMoodEntries = async (req, res, next) => {
   try {

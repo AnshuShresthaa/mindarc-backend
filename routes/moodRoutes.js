@@ -13,7 +13,7 @@ router.route("/").post(authGuard, createMoodEntry).get(getAllMoodEntries);
 router
   .route("/:id")
   .put(authGuard, updateMoodEntry)
-  .delete(authGuard, deleteMoodEntry)
-  .get(getMoodEntry);
+  .delete(authGuard, deleteMoodEntry);
+router.get("/:userId", getMoodEntry);
 
 export default router;
