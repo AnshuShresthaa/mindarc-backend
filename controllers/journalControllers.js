@@ -2,9 +2,12 @@ import Journal from "../models/Journal";
 
 const createJournalEntry = async (req, res, next) => {
   try {
-    const { title, content, tags } = req.body;
-    const userId = req.user.id; // Retrieve user ID from authenticated user
-    const journalEntry = await Journal.create({ title, content, tags, userId });
+    console.log(req.body)
+    const { user,title, content, tags } = req.body;
+    // Retrieve user ID from authenticated user
+    
+    const journalEntry = await Journal.create({ title, content, tags, user });
+    
     res.status(201).json(journalEntry);
   } catch (error) {
     next(error);
@@ -50,13 +53,17 @@ const deleteJournalEntry = async (req, res, next) => {
 
 const getJournalEntry = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const journalEntry = await Journal.findById(id);
+    
+    const id = req.params.id;
+    
+    const journalEntry = await Journal.find({ user: id });
+    console.log(journalEntry)
+   
     if (!journalEntry) {
       return res.status(404).json({ message: "Journal entry not found" });
     }
-
-    res.json(journalEntry);
+  
+  res.json(journalEntry);
   } catch (error) {
     next(error);
   }
