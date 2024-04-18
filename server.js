@@ -8,6 +8,7 @@ import {
     invalidPathHandler 
 } from "./middleware/errorHandler";
 
+
 // Routes
 import userRoutes from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
